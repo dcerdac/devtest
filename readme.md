@@ -1,58 +1,68 @@
-# Dev Test
+# Elevator Model by Diego Cerda
 
-## Elevators
-When an elevator is empty and not moving this is known as it's resting floor. 
-The ideal resting floor to be positioned on depends on the likely next floor that the elevator will be called from.
+![Diagram](imgs/diagram.png)
 
-We can build a prediction engine to predict the likely next floor based on historical demand, if we have the data.
+## Running the Project
 
-The goal of this project is to model an elevator and save the data that could later be used to build a prediction engine for which floor is the best resting floor at any time
-- When people call an elevator this is considered a demand
-- When the elevator is vacant and not moving between floors, the current floor is considered its resting floor
-- When the elevator is vacant, it can stay at the current position or move to a different floor
-- The prediction model will determine what is the best floor to rest on
+To run the project, follow these steps:
 
+1. Ensure you have all the necessary dependencies installed. You can install them using:
 
-_The requirement isn't to complete this system but to start building a system that would feed into the training and prediction
-of an ML system_
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-You will need to talk through your approach, how you modelled the data and why you thought that data was important, provide endpoints to collect the data and 
-a means to store the data. Testing is important and will be used verify your system
+2. Navigate to the project directory:
 
-## A note on AI generated code
-This project isn't about writing code, AI can and will do that for you.
-The next step in this process is to talk through your solution and the decisions you made to come to them. It makes for an awkward and rather boring interview reviewing chatgpt's solution.
+    ```sh
+    cd devtest
+    ```
 
-If you use a tool to help you write code, that's fine, but we want to see _your_ thought process.
+3. Initialize the database:
 
-Provided under the chatgpt folder is the response you get back from chat4o. 
-If your intention isn't to complete the project but to get an AI to spec it for you please, feel free to submit this instead of wasting OpenAI's server resources.
+    ```sh
+    flask db init
+    flask db migrate
+    flask db upgrade
+    ```
 
+4. Run the Flask application:
 
-## Problem statement recap
-This is a domain modeling problem to build a fit for purpose data storage with a focus on ai data ingestion
-- Model the problem into a storage schema (SQL DB schema or whatever you prefer)
-- CRUD some data
-- Add some flair with a business rule or two
-- Have the data in a suitable format to feed to a prediction training algorithm
+    ```sh
+    flask run
+    ```
 
----
+The application will be available at `http://127.0.0.1:5000`.
 
-#### To start
-- Fork this repo and begin from there
-- For your submission, PR into the main repo. We will review it, a offer any feedback and give you a pass / fail if it passes PR
-- Don't spend more than 4 hours on this. Projects that pass PR are paid at the standard hourly rate
+## Running Tests
 
-#### Marking
-- You will be marked on how well your tests cover the code and how useful they would be in a prod system
-- You will need to provide storage of some sort. This could be as simple as a sqlite or as complicated as a docker container with a migrations file
-- Solutions will be marked against the position you are applying for, a Snr Dev will be expected to have a nearly complete solution and to have thought out the domain and built a schema to fit any issues that could arise 
-A Jr. dev will be expected to provide a basic design and understand how ML systems like to ingest data
+To run the tests, follow these steps:
 
+1. Ensure you have all the necessary dependencies installed.
+2. Navigate to the project directory:
 
-#### Trip-ups from the past
-Below is a list of some things from previous submissions that haven't worked out
-- Built a prediction engine
-- Built a full website with bells and whistles
-- Spent more than the time allowed (you won't get bonus points for creating an intricate solution, we want a fit for purpose solution)
-- Overcomplicated the system mentally and failed to start
+    ```sh
+    cd devtest
+    ```
+
+3. Run the tests using pytest:
+
+    ```sh
+    pytest
+    ```
+
+## API Documentation
+
+The API documentation is available at:
+
+[Swagger UI](http://127.0.0.1:5000/apidocs/)
+
+## Assumptions / Considerations
+
+- Elevator Environment (store, hotel) has an impact on the demand and use.
+- Some elevators won't accept new requests when in transit.
+- An elevator can rest on different floors at different times.
+- Detects current demand, e.g., if someone is moving into an apartment, there may be lots of demand on floors 2 to 6.
+
+![Swagger](imgs/docs.png)
+
